@@ -1,0 +1,82 @@
+
+Set of VagrantFiles to setup VMs (virtual machines),
+running the OpenIndiana operating system, for running Squeak or Cuis images.
+
+See https://www.vagrantup.com for more info on vagrant.
+
+See https://www.openindiana.org/ for info on OpenIndiana.
+
+See http://squeak.org/ and http://opensmalltalk.org for Squeak Smalltalk.
+For Cuis see http://cuis-smalltalk.org/ 
+
+There are directories for Squeak classic (version 1, 2, 3 and 4)
+and Squeak OpenSmalltalk (version 5, 6) those are different Smalltalk images.
+
+The directory "squeak" sets up a VM for squeak classic.
+
+The directories "cog-spur" and "stack-spur" setup VMs for OpenSmalltalk Spur based Smalltalk systems Squeak 6.0 alpha and Squeak 5.
+
+The directory "cuis" sets up a "cog-spur" VM for running Cuis images.
+
+Assuming that "vagrant" is installed,
+
+	vagrant up
+
+will deploy an instance of the OpenIndiana operating system for Squeak.
+
+Once finished, login with :
+
+	vagrant ssh
+
+This should set the $DISPLAY using X11 forwarding over ssh.
+
+Check with echo $DISPLAY.
+
+The various Smalltalk systems use a X11 display module to display to X11.
+
+	inisqueak
+
+This will initialize (download) the Squeak images and run squeak.
+
+It will also download the Squeak sources.
+
+See "man inisqueak" for more info.
+
+You only have to run "inisqueak" the first time, later just run "squeak" :
+
+	squeak squeak.image
+
+or simply
+
+	squeak
+
+See "man squeak" for more info.
+
+For Cuis a script is provided in the VM to git clone Cuis:
+
+	sh ./clone-cuis
+
+This will clone the Cuis images.
+
+	cd Cuis-Smalltalk-Dev
+
+Either run the image immediately or first copy it to squeak.image :
+
+	squeak Cuis5.0-????.image
+
+or
+
+	cp Cuis5.0-????.image squeak.image
+	cp Cuis5.0-????.changes squeak.changes
+	squeak
+
+The operating system can be updated by "pkg update".
+
+This will update the squeak VM but not the Squeak images.
+
+For updating Squeak images, open the File menu and choose Update ...
+
+Choose "Save and quit" to write the Squeak updates to the image.
+
+David Stes
+

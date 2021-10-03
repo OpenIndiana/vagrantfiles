@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"). You may
+# only use this file in accordance with the terms of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+#
+
+#
+# Copyright 2021 David Stes
+#
+
+Vagrant.configure("2") do |config|
+
+    # Every Vagrant development environment requires a box. You can search for
+    # boxes at https://atlas.hashicorp.com/search.
+    config.vm.box = "openindiana/hipster"
+
+    # Disable automatic box update checking. If you disable this, then
+    # boxes will only be checked for updates when the user runs
+    # `vagrant box outdated`. This is not recommended.
+    config.vm.box_check_update = true
+
+    # Forward X11 to run the Smalltalk GUI on the host
+    config.ssh.forward_agent = true
+    config.ssh.forward_x11 = true
+
+    # Install the Cog-Spur VM and git clone the Cuis images
+    config.vm.provision "shell", inline: <<-SHELL
+
+        echo "Installing Cog Spur OpenSmalltalk"
+        pfexec pkg install runtime/smalltalk/cog-spur
+
+#	Squeak Cog Spur requires proc_priocntl or prints a warning
+	echo "Adding PRIV_DEFAULT=basic,proc_priocntl to policy.conf"
+	cp /etc/security/policy.conf /etc/security/policy.conf.$(date +"%F")
+	echo "PRIV_DEFAULT=basic,proc_priocntl" >> /etc/security/policy.conf
+
+        echo "Run Squeak by logging in (vagrant ssh)"
+	echo "Then run: inisqueak"
+	echo "On subsequent logins, just run: squeak"
+    SHELL
+
+end
+
