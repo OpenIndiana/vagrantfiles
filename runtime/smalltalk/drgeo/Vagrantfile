@@ -55,12 +55,17 @@ Vagrant.configure("2") do |config|
 
         echo "Setup script to clone Cuis"
         echo 'git clone https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Dev.git' >> clone-cuis.sh
+        echo "Setup script to clone DrGeo"
+	echo 'git clone https://github.com/hilaire/cuis-xp.git' >> clone-drgeo.sh
 
         echo "End of Cuis install"
-        echo "Run Cuis by logging in (vagrant ssh)"
+        echo "Run DrGeo on Cuis by logging in (vagrant ssh)"
 	echo "Then run: sh ./clone-cuis.sh"
+	echo "Then run: sh ./clone-drgeo.sh"
 	echo "cd Cuis-Smalltalk-Dev.git"
 	echo "squeak Cuis5.0-<nn>.image"
+	echo "In Cuis, fileIn DrGeo.pck.st"
+	echo "In a Cuis workspace run: DrGeoSystem beDevelopment"
     SHELL
 
 end
