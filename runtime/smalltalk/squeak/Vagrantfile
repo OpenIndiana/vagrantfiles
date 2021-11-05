@@ -29,10 +29,19 @@ Vagrant.configure("2") do |config|
     config.ssh.forward_agent = true
     config.ssh.forward_x11 = true
 
+    # Forward Pulseaudio to play Smalltalk audio on the host
+    config.ssh.extra_args = [ '-R', '24713:localhost:4731' ]
+
     config.vm.provision "shell", inline: <<-SHELL
 
         echo "Installing Squeak"
         pfexec pkg install runtime/smalltalk/squeak
+
+#       Forward sound/audio to the host
+        echo "Adding PULSE_SERVER=tcp:localhost:24713 to the /etc/profile file"
+        cp /etc/profile /etc/profile.$(date +"%F")
+        echo "PULSE_SERVER='tcp:localhost:24713'" >> /etc/profile
+        echo "export PULSE_SERVER" >> /etc/profile
 
         echo "Run Squeak by logging in (vagrant ssh)"
 	echo "Then run: inisqueak"
