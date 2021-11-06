@@ -43,7 +43,10 @@ you can also play audiofiles in a Vagrant guest VM.
 
 See the PulseAudio X11 Credential Utility ('pax11publish') and 'paprefs' on the host for more information.
 
-By setting PULSE_SERVER="tcp:localhost:24713" and forwarding port 24713 on the
-guest to port 4713 on the host, the command 'pactl info' can be used,
+The command "paprefs" can be used to allow TCP connections to pulse.
+
+By setting PULSE_SERVER="tcp:localhost:24713" in the guest VM,
+and by forwarding port 24713 on the guest to port 4713 on the host,
+the command 'pactl info' can be used in the guest VM (or on the host),
 to check that you can connect to the pulse server on the host.
 
