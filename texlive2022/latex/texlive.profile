@@ -1,14 +1,14 @@
 # texlive.profile written on Sun Sep 26 17:42:20 2021 UTC
 # It will NOT be updated and reflects only the
 # installation profile at installation time.
-selected_scheme scheme-small
-TEXDIR /usr/texlive/2021
-TEXMFCONFIG ~/.texlive2021/texmf-config
+selected_scheme scheme-basic
+TEXDIR /usr/texlive/2022
+TEXMFCONFIG ~/.texlive2022/texmf-config
 TEXMFHOME ~/texmf
 TEXMFLOCAL /usr/texlive/texmf-local
-TEXMFSYSCONFIG /usr/texlive/2021/texmf-config
-TEXMFSYSVAR /usr/texlive/2021/texmf-var
-TEXMFVAR ~/.texlive2021/texmf-var
+TEXMFSYSCONFIG /usr/texlive/2022/texmf-config
+TEXMFSYSVAR /usr/texlive/2022/texmf-var
+TEXMFVAR ~/.texlive2022/texmf-var
 binary_i386-solaris 1
 instopt_adjustpath 1
 instopt_adjustrepo 1
