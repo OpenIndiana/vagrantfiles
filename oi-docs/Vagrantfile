@@ -38,12 +38,11 @@ Vagrant.configure("2") do |config|
 	# library/python/futures seems to have a problem now
         pfexec pkg install -v \
 		git lynx links\
-		library/python/futures \
-		library/python/mkdocs \
 		developer/documentation-tool/mdl
 
 	# as of 21/9/2021 futures IPS is missing so install by pip
-	pfexec pip install futures
+	# as of 1/10/2022 pkg install mkdocs no longer works (pkg obsoleted)
+	pfexec pip install mkdocs==1.0.4
 
         echo "Run mkdocs by logging in (vagrant ssh)"
 	echo ""
