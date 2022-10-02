@@ -11,7 +11,7 @@
 #
 
 #
-# Copyright 2021 David Stes
+# Copyright 2021,2022 David Stes
 #
 
 Vagrant.configure("2") do |config|
@@ -42,7 +42,11 @@ Vagrant.configure("2") do |config|
 
 	# as of 21/9/2021 futures IPS is missing so install by pip
 	# as of 1/10/2022 pkg install mkdocs no longer works (pkg obsoleted)
-	pfexec pip install mkdocs==1.0.4
+	# pfexec pip install mkdocs==1.0.4 latest 1.4.0 also works for me
+	pfexec pip install mkdocs
+        # openindiana docs use the "spacelab' theme which is in :
+	pfexec pip install mkdocs-bootswatch
+	# without this you'd get Error: Unrecognised theme name: 'spacelab'
 
         echo "Run mkdocs by logging in (vagrant ssh)"
 	echo ""
