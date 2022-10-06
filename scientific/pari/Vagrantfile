@@ -1,0 +1,62 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+#
+# This file and its contents are supplied under the terms of the
+# Common Development and Distribution License ("CDDL"). You may
+# only use this file in accordance with the terms of the CDDL.
+#
+# A full copy of the text of the CDDL should have accompanied this
+# source. A copy of the CDDL is also available via the Internet at
+# http://www.illumos.org/license/CDDL.
+#
+
+#
+# Copyright 2022 David Stes
+#
+
+Vagrant.configure("2") do |config|
+
+    # Every Vagrant development environment requires a box. You can search for
+    # boxes at https://atlas.hashicorp.com/search.
+    config.vm.box = "openindiana/hipster"
+
+    # Disable automatic box update checking. If you disable this, then
+    # boxes will only be checked for updates when the user runs
+    # `vagrant box outdated`. This is not recommended.
+    config.vm.box_check_update = true
+
+    config.vm.provision "shell", inline: <<-SHELL
+
+	# install PARI binaries and build tools 
+        # pfexec pkg install -v pari build-essential
+        pfexec pkg install -v pari
+
+        datadir=/usr/share/pari
+        url=https://pari.math.u-bordeaux.fr/pub/pari
+
+	test $datadir  || echo "pkg install pari didn't create $datadir"
+	
+	# download extra packages to the /export/home/vagrant home directory 
+
+        # for p in elldata galpol seadata galdata nftables nflistdata
+        for p in elldata galpol seadata galdata nflistdata
+        do
+          echo "Downloading $p ..."
+          wget --no-verbose $url/packages/$p.tgz
+          tar xfz $p.tgz
+	  test data/$p || echo "Extract $p failed."
+	  pfexec mv data/$p $datadir
+	  pfexec chown -R root:sys $datadir/$p
+        done
+
+	rmdir data
+
+        # wget --no-verbose $url/unix/pari-2.13.4.tar.gz
+        # tar xfz pari-2.13.4.tar.gz
+
+        echo "More info at https://pari.math.u-bordeaux.fr/"
+        # echo "Run pfexec ./Configure and pfexec make dobench "
+    SHELL
+
+end
+
